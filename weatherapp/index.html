@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="icon" type="image/x-icon " href="images/favicon.svg" />
+  </head>
+  <body
+    class="bg-cover flex justify-center items-center bg-center h-screen w-screen"
+    style="
+      background-image: url('images/bgimage.jpg');
+      backdrop-filter: blur(3px);
+    "
+  >
+    <main
+      class="mainContainer h-auto flex flex-col w-72 border-[1px] rounded-md bg-gradient-to-b from-blue-200 to-violet-300 shadow-sm shadow-blue-400"
+    >
+      <div class="Searchbar flex m-4 items-center justify-around">
+        <input
+          class="m-1 mr-4 h-6 rounded-[8px] outline-none bg-slate-200 hover:bg-slate-100 hover:border-slate-400 hover:border-[1px]"
+          type="search"
+          name="search city"
+          id="citysearch"
+          placeholder="
+    Search city..."
+        />
+        <img
+          class="h-6 hover:h-7 cursor-pointer"
+          id="searchBtn"
+          src="images/search_9545869.png"
+        />
+      </div>
+      <div class="weatherInfoSection hidden">
+        <div class="Locationcontainer flex justify-around items-center">
+          <div class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#ffffff"
+              class="location size-7"
+            >
+              <path
+                d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"
+              />
+            </svg>
+            <h1 class="Place text-white font-bold font-sans text-xl">
+              Jakarta
+            </h1>
+          </div>
+          <div class="Date text-white font-semibold">Wed, 07 Aug</div>
+        </div>
+        <div class="weatherContainer mt-2 flex justify-around items-center">
+          <img class="weatherImg size-24" src="images/rain.svg" alt="" />
+          <div
+            class="weatherCondition mt-4 flex flex-col justify-center items-center text-white font-semibold"
+          >
+            <div class="tempTxt text-4xl font-bold">30°C</div>
+
+            <div class="conditionTxt">Cloudy</div>
+          </div>
+        </div>
+
+        <div class="humidityContainer flex mt-1 justify-around">
+          <div class="humidityConditions flex items-center justify-around">
+            <div class="iconhumidity">
+              <img
+                class="size-10"
+                src="images/humidity_percentage_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png"
+                alt=""
+              />
+            </div>
+
+            <div class="humidity flex flex-col text-white">
+              <p class="text-[14px]">Humidity</p>
+              <p class="humidityTxt font-bold text-sm">55%</p>
+            </div>
+          </div>
+          <div class="windspeedContainer flex">
+            <div class="wind">
+              <img
+                class="size-10"
+                src="images/air_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png"
+                alt=""
+              />
+            </div>
+            <div class="fle flex-col text-white">
+              <p class="text-[14px]">Wind Speed</p>
+              <p class="windSpeed font-bold text-sm">11 m/s</p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="forecastContainer flex overflow-x-scroll justify-around text-white font-semibold"
+        >
+          <div
+            id="card1"
+            class="card p-1 min-w-16 bg-gradient-to-b from-violet-500 to-violet-400 h-fit w-fit border-white flex flex-col justify-center items-center rounded-md m-5"
+          >
+            <div class="date">09 Aug</div>
+            <img class="size-10" src="images/haze.svg" alt="" />
+            <div id="temperature">30°C</div>
+          </div>
+          <div
+            id="card2"
+            class="card p-1 min-w-16 bg-gradient-to-b from-violet-500 to-violet-400 h-fit w-fit border-white flex flex-col justify-center items-center rounded-md m-5"
+          >
+            <div class="date">09 Aug</div>
+            <img class="size-10" src="images/haze.svg" alt="" />
+            <div id="temperature">30°C</div>
+          </div>
+          <div
+            id="card3"
+            class="card p-1 min-w-16 bg-gradient-to-b from-violet-500 to-violet-400 h-fit w-fit border-white flex flex-col justify-center items-center rounded-md m-5"
+          >
+            <div class="date">09 Aug</div>
+            <img class="size-10" src="images/haze.svg" alt="" />
+            <div id="temperature">30°C</div>
+          </div>
+          <div
+            id="card4"
+            class="card p-1 min-w-16 bg-gradient-to-b from-violet-500 to-violet-400 h-fit w-fit border-white flex flex-col justify-center items-center rounded-md m-5"
+          >
+            <div class="date">09 Aug</div>
+            <img class="size-10" src="images/haze.svg" alt="" />
+            <div id="temperature">30°C</div>
+          </div>
+        </div>
+      </div>
+      <div class="searchCity flex flex-col items-center justify-center">
+        <img
+          class="opacity-70 hover:opacity-90"
+          src="images/searchcity.jpg"
+          alt=""
+        />
+        <p class="text-white p-4 font-semibold">
+          Find out the weather conditions of the city.
+        </p>
+      </div>
+      <div
+        id="notFound"
+        class="hidden flex flex-col items-center justify-center"
+      >
+        <img
+          class="opacity-70 hover:opacity-90"
+          src="images/error404.jpg"
+          alt=""
+        />
+        <p class="text-white text-center p-4 font-semibold">
+          Oops! Information not found.
+        </p>
+      </div>
+    </main>
+
+    <script src="index.js"></script>
+  </body>
+</html>
