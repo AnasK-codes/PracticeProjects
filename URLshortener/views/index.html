@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      input[type="url"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #result {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>URL Shortener</h1>
+      <div class="form-group">
+        <input
+          type="url"
+          id="urlInput"
+          placeholder="Enter your URL here"
+          required
+        />
+        <button onclick="shortenURL()">Shorten URL</button>
+      </div>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      async function shortenURL() {
+        const urlInput = document.getElementById("urlInput");
+        const resultDiv = document.getElementById("result");
+
+        try {
+          const response = await fetch("/url", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ redirectURL: urlInput.value }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            const shortURL = `${window.location.origin}/${data.shortId}`;
+            resultDiv.innerHTML = `
+                        <div class="success">
+                            <p>Shortened URL: <a href="${shortURL}" target="_blank">${shortURL}</a></p>
+                            <p><a href="/analytics/${data.shortId}">View Analytics</a></p>
+                        </div>
+                    `;
+          } else {
+            throw new Error(data.error || "Failed to shorten URL");
+          }
+        } catch (error) {
+          resultDiv.innerHTML = `
+                    <div class="error">
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Analytics</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .analytics-data {
+        margin-top: 20px;
+      }
+      .visit-count {
+        font-size: 24px;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+      .visit-history {
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+      }
+      .visit-item {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .back-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+      }
+      .back-button:hover {
+        background-color: #5a6268;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>URL Analytics</h1>
+      <div id="analytics" class="analytics-data">Loading...</div>
+      <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+      async function fetchAnalytics() {
+        const shortId = window.location.pathname.split("/").pop();
+        try {
+          const response = await fetch(`/url/analytics/${shortId}`);
+          const data = await response.json();
+
+          if (response.ok) {
+            const analyticsDiv = document.getElementById("analytics");
+            analyticsDiv.innerHTML = `
+                        <div class="visit-count">
+                            Total Visits: ${data.visitHistory.length}
+                        </div>
+                        <div class="analytics-info">
+                            <p>Original URL: <a href="${
+                              data.redirectURL
+                            }" target="_blank">${data.redirectURL}</a></p>
+                            <p>Short URL: <a href="/${
+                              data.shortId
+                            }" target="_blank">${window.location.origin}/${
+              data.shortId
+            }</a></p>
+                        </div>
+                        <div class="visit-history">
+                            <h2>Visit History</h2>
+                            ${data.visitHistory
+                              .map(
+                                (visit) => `
+                                <div class="visit-item">
+                                    Visited on: ${new Date(
+                                      visit.timestamp
+                                    ).toLocaleString()}
+                                </div>
+                            `
+                              )
+                              .join("")}
+                        </div>
+                    `;
+          } else {
+            throw new Error(data.error || "Failed to fetch analytics");
+          }
+        } catch (error) {
+          document.getElementById("analytics").innerHTML = `
+                    <div class="error">
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+        }
+      }
+
+      fetchAnalytics();
+    </script>
+  </body>
+</html>
